@@ -48,11 +48,25 @@ const randomTurns = () => {
 }
 
 Vue.component('round-picker', {
-    props: ['label'],
+    props: ['label', 'disabled'],
     data: () => ({
         value: 0,
     }),
     template: '#round-picker-template',
+    methods: {
+        handleClick(newValue) {
+            console.log("handleClick(), disabled: "+ this.disabled);
+            if (! this.disabled) {
+                this.value = newValue;
+                this.$emit('update:value', newValue);
+            }
+        }
+    },
+    computed: {
+        classes: function() {
+            return "icon affinityIcon" + (value == 2 ? ' affinitySelectedFire' : '');
+        },
+    },
 });
 
 Vue.component('duel-status', {
@@ -129,6 +143,22 @@ if (location.href.indexOf('duels') !== -1) {
                     });
                 }, 0);
             }, 0);
+
+            const thiz = this;
+            setInterval(function() {
+                console.log('Randomizing opponents moves');
+                if (! thiz.opponentMoves) {
+                    thiz.opponentMoves = randomTurns();
+                } else {
+                    thiz.opponentMoves[0] = randomTurn();
+                    thiz.opponentMoves[1] = randomTurn();
+                    thiz.opponentMoves[2] = randomTurn();
+                    thiz.opponentMoves[3] = randomTurn();
+                    thiz.opponentMoves[4] = randomTurn();
+                }
+
+                console.log(thiz.opponentMoves)
+            }, 3000);
 
             // prior to any 'await' call, we need to determine whether we are in
             // offline mode or not
@@ -233,7 +263,7 @@ if (location.href.indexOf('duels') !== -1) {
                 const opponentMoves = thisDuel.moves[this.opposingWizardId];
 
                 if (opponentMoves) {
-                    //console.log("Setting opponentMoves", opponentMoves);
+                    console.log("Setting opponentMoves", opponentMoves);
                     this.opponentMoves = opponentMoves;
                     this.opponentMovesReceived = true;
                 }

@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/drewstaylor/cheeze-of-insight",
   "dependencies": {
+    "aws4": "^1.8.0",
     "browserify": "^16.5.0",
     "dotenv": "^8.0.0",
     "firechat": "^3.0.1",

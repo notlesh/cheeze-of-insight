@@ -54,11 +54,31 @@
 
                     <div id="wiz1-placeholder"></div>
 
-                    <round-picker label="1" v-bind:value.sync="ourMoves[0]"></round-picker>
-                    <round-picker label="2" v-bind:value.sync="ourMoves[1]"></round-picker>
-                    <round-picker label="3" v-bind:value.sync="ourMoves[2]"></round-picker>
-                    <round-picker label="4" v-bind:value.sync="ourMoves[3]"></round-picker>
-                    <round-picker label="5" v-bind:value.sync="ourMoves[4]"></round-picker>
+                        <round-picker
+                            label="1"
+                            v-bind:disabled.sync="ourMovesSubmitted"
+                            v-bind:value.sync="ourMoves[0]">
+                        </round-picker>
+                        <round-picker
+                            label="2"
+                            v-bind:disabled.sync="ourMovesSubmitted"
+                            v-bind:value.sync="ourMoves[1]">
+                        </round-picker>
+                        <round-picker
+                            label="3"
+                            v-bind:disabled.sync="ourMovesSubmitted"
+                            v-bind:value.sync="ourMoves[2]">
+                        </round-picker>
+                        <round-picker
+                            label="4"
+                            v-bind:disabled.sync="ourMovesSubmitted"
+                            v-bind:value.sync="ourMoves[3]">
+                        </round-picker>
+                        <round-picker
+                            label="5"
+                            v-bind:disabled.sync="ourMovesSubmitted"
+                            v-bind:value.sync="ourMoves[4]">
+                        </round-picker>
 
                     <div v-if="mode != 'offline'" class="forecast-submit-button">
                         <button
@@ -77,11 +97,126 @@
                     <div id="wiz2-placeholder"></div>
 
                     <div v-if="mode == 'offline'">
-                        <round-picker label="1" v-bind:value.sync="opponentMoves[0]"></round-picker>
-                        <round-picker label="2" v-bind:value.sync="opponentMoves[1]"></round-picker>
-                        <round-picker label="3" v-bind:value.sync="opponentMoves[2]"></round-picker>
-                        <round-picker label="4" v-bind:value.sync="opponentMoves[3]"></round-picker>
-                        <round-picker label="5" v-bind:value.sync="opponentMoves[4]"></round-picker>
+                        <round-picker
+                            id="round-picker-0"
+                            label="1"
+                            v-bind:value.sync="opponentMoves[0]">
+                        </round-picker>
+                        <round-picker
+                            label="2"
+                            v-bind:value.sync="opponentMoves[1]">
+                        </round-picker>
+                        <round-picker
+                            label="3"
+                            v-bind:value.sync="opponentMoves[2]">
+                        </round-picker>
+                        <round-picker
+                            label="4"
+                            v-bind:value.sync="opponentMoves[3]">
+                        </round-picker>
+                        <round-picker
+                            label="5"
+                            v-bind:value.sync="opponentMoves[4]">
+                        </round-picker>
+                    </div>
+
+                    <!-- in real duel mode, we avoid using the 'round-picker' component because the
+                        data binding doesn't work -->
+                    <div v-else>
+                        <div class="affinityPicker">
+                            <span>1</span>
+                                <button>
+                                    <img
+                                        :class="'icon affinityIcon ' + (opponentMoves[0] == 2 ? 'affinitySelectedFire' : '')"
+                                        src="/img/icons/fire.svg">
+                                </button>
+                                <button>
+                                    <img
+                                        :class="'icon affinityIcon ' + (opponentMoves[0] == 3 ? 'affinitySelectedWater' : '')"
+                                        src="/img/icons/water.svg">
+                                </button>
+                                <button>
+                                    <img
+                                        :class="'icon affinityIcon ' + (opponentMoves[0] == 4 ? 'affinitySelectedWind' : '')"
+                                        src="/img/icons/wind.svg">
+                                </button>
+                        </div>
+
+                        <div class="affinityPicker">
+                            <span>2</span>
+                                <button>
+                                    <img
+                                        :class="'icon affinityIcon ' + (opponentMoves[1] == 2 ? 'affinitySelectedFire' : '')"
+                                        src="/img/icons/fire.svg">
+                                </button>
+                                <button>
+                                    <img
+                                        :class="'icon affinityIcon ' + (opponentMoves[1] == 3 ? 'affinitySelectedWater' : '')"
+                                        src="/img/icons/water.svg">
+                                </button>
+                                <button>
+                                    <img
+                                        :class="'icon affinityIcon ' + (opponentMoves[1] == 4 ? 'affinitySelectedWind' : '')"
+                                        src="/img/icons/wind.svg">
+                                </button>
+                        </div>
+
+                        <div class="affinityPicker">
+                            <span>3</span>
+                                <button>
+                                    <img
+                                        :class="'icon affinityIcon ' + (opponentMoves[2] == 2 ? 'affinitySelectedFire' : '')"
+                                        src="/img/icons/fire.svg">
+                                </button>
+                                <button>
+                                    <img
+                                        :class="'icon affinityIcon ' + (opponentMoves[2] == 3 ? 'affinitySelectedWater' : '')"
+                                        src="/img/icons/water.svg">
+                                </button>
+                                <button>
+                                    <img
+                                        :class="'icon affinityIcon ' + (opponentMoves[2] == 4 ? 'affinitySelectedWind' : '')"
+                                        src="/img/icons/wind.svg">
+                                </button>
+                        </div>
+
+                        <div class="affinityPicker">
+                            <span>4</span>
+                                <button>
+                                    <img
+                                        :class="'icon affinityIcon ' + (opponentMoves[3] == 2 ? 'affinitySelectedFire' : '')"
+                                        src="/img/icons/fire.svg">
+                                </button>
+                                <button>
+                                    <img
+                                        :class="'icon affinityIcon ' + (opponentMoves[3] == 3 ? 'affinitySelectedWater' : '')"
+                                        src="/img/icons/water.svg">
+                                </button>
+                                <button>
+                                    <img
+                                        :class="'icon affinityIcon ' + (opponentMoves[3] == 4 ? 'affinitySelectedWind' : '')"
+                                        src="/img/icons/wind.svg">
+                                </button>
+                        </div>
+
+                        <div class="affinityPicker">
+                            <span>5</span>
+                                <button>
+                                    <img
+                                        :class="'icon affinityIcon ' + (opponentMoves[4] == 2 ? 'affinitySelectedFire' : '')"
+                                        src="/img/icons/fire.svg">
+                                </button>
+                                <button>
+                                    <img
+                                        :class="'icon affinityIcon ' + (opponentMoves[4] == 3 ? 'affinitySelectedWater' : '')"
+                                        src="/img/icons/water.svg">
+                                </button>
+                                <button>
+                                    <img
+                                        :class="'icon affinityIcon ' + (opponentMoves[4] == 4 ? 'affinitySelectedWind' : '')"
+                                        src="/img/icons/wind.svg">
+                                </button>
+                        </div>
                     </div>
 
                 </div>
@@ -124,19 +259,19 @@
                 <img
                     :class="'icon affinityIcon ' + (value == 2 ? 'affinitySelectedFire' : '')"
                     src="/img/icons/fire.svg"
-                    @click="value=2; $emit('update:value', 2);">
+                    @click="handleClick(2);">
             </button>
             <button>
                 <img
                     :class="'icon affinityIcon ' + (value == 3 ? 'affinitySelectedWater' : '')"
                     src="/img/icons/water.svg"
-                    @click="value=3; $emit('update:value', 3);">
+                    @click="handleClick(3);">
             </button>
             <button>
                 <img
                     :class="'icon affinityIcon ' + (value == 4 ? 'affinitySelectedWind' : '')"
                     src="/img/icons/wind.svg"
-                    @click="value=4; $emit('update:value', 4);">
+                    @click="handleClick(4);">
             </button>
         </div>
     </script>
